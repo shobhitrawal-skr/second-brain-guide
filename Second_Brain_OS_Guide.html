@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Second Brain OS: Complete Installation & Implementation Manual</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+    
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --rose: #f43f5e;
+      --cyan: #00f0ff;
+      --green: #39ff14;
+      --yellow: #fffb00;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 4rem 2rem;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background-color: #ffffff;
+        color: #000000;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      pre, code {
+        background-color: #f1f5f9 !important;
+        color: #000000 !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .panel {
+        background-color: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #000000 !important;
+      }
+      .highlight-box {
+        background-color: #f1f5f9 !important;
+        border-left: 4px solid #4f46e5 !important;
+        color: #000000 !important;
+      }
+      h1, h2, h3, h4 {
+        color: #000000 !important;
+      }
+      p, li, span {
+        color: #1e293b !important;
+      }
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #00f0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.9rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
+      color: var(--cyan);
+      margin-top: 3.5rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      color: var(--text);
+      border-left: 3px solid var(--accent);
+      padding-left: 0.75rem;
+      margin-top: 2.5rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: 0.6rem;
+      font-size: 1.05rem;
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: var(--rose);
+    }
+
+    pre {
+      font-family: 'Fira Code', monospace;
+      background-color: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    pre code {
+      background-color: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    .panel {
+      background-color: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .panel h4 {
+      margin-top: 0;
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .highlight-box {
+      border-left: 4px solid var(--accent);
+      background-color: rgba(99, 102, 241, 0.08);
+      padding: 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.75rem;
+    }
+
+    .highlight-box p {
+      margin-bottom: 0;
+      color: var(--text);
+    }
+
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 85vh;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+    }
+
+    .cover-subtitle {
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.4;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background-color: var(--accent-glow);
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .screenshot-container {
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .screenshot {
+      width: 100%;
+      display: block;
+    }
+
+    .plugin-item {
+      margin-bottom: 1.25rem;
+    }
+    .plugin-name {
+      font-weight: 600;
+      color: var(--cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Page -->
+  <div class="cover">
+    <div class="tag">AI Creator Manual</div>
+    <h1>Building the AI-Powered Second Brain OS</h1>
+    <p class="cover-subtitle">A Step-by-Step Prompting Playbook to Build, Customize, and Automate a Concept-Driven Knowledge Graph from Scratch</p>
+    
+    <div class="panel">
+      <strong>Core OS Modules Included in this Blueprint:</strong>
+      <ul style="margin-top: 0.75rem; padding-left: 1.25rem;">
+        <li><strong>📁 Core Directory Schema:</strong> 12 spaces designed to cleanly segregate daily tasks, content pipelines, SaaS MVPs, and permanent concept repositories.</li>
+        <li><strong>🎨 Glassmorphism & Neon Visuals:</strong> High-specificity CSS variables rendering glowing neon connections and floating constellation physics loops.</li>
+        <li><strong>🔌 Community Plugin Configurations:</strong> Setup matrices for Dataview data extractions, Templater script triggers, and Kanban pipelines.</li>
+        <li><strong>🧠 Automated Smart-Linking Engine:</strong> Custom first-occurrence regex scripts in Python to auto-index new notes to concept hubs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Section 1: Downloading & Installing Obsidian -->
+  <div class="page-break"></div>
+  <h2>1. Downloading & Installing Obsidian</h2>
+  <p>To establish your local knowledge graph database, you must install the official Obsidian application client.</p>
+  
+  <div class="panel">
+    <h4>Step-by-Step Installation:</h4>
+    <ol style="padding-left: 1.25rem;">
+      <li>Navigate to the homepage: <a href="https://obsidian.md/" target="_blank" style="color: var(--cyan); text-decoration: none;"><strong>https://obsidian.md/</strong></a></li>
+      <li>Click the button labeled <strong>"Get Obsidian for Windows"</strong> (or select Mac or Linux installation packages).</li>
+      <li>Run the installation file (e.g. <code>Obsidian.Setup.exe</code>) on your computer.</li>
+      <li>Launch the application, select <strong>"Create new vault"</strong>, name your directory <code>SecondBrain</code>, and set its absolute destination folder (e.g. <code>D:\Shobhit\SecondBrain</code>).</li>
+    </ol>
+  </div>
+
+  <div class="screenshot-container">
+    <img src="obsidian_homepage.png" alt="Obsidian Homepage" class="screenshot">
+  </div>
+
+  <!-- Section 2: Installed Plugins Setup -->
+  <div class="page-break"></div>
+  <h2>2. Community Plugins Directory</h2>
+  <p>The AI Creator OS extends Obsidian's default features with specialized community plugins. Here is the list of plugins to install:</p>
+
+  <div class="panel">
+    <h4>Plugins checklist:</h4>
+    
+    <div class="plugin-item">
+      <span class="plugin-name">1. Dataview</span>
+      <p style="margin-left: 1rem; margin-top: 0.25rem;">Transforms your vault into an interactive database. It executes complex queries and extracts metadata (likes, shares, categories) to feed search lists and content dashboards. <strong>Configuration:</strong> Turn **ON** <code>Enable JavaScript Queries</code> and <code>Enable Inline JavaScript Queries</code> in settings.</p>
+    </div>
+
+    <div class="plugin-item">
+      <span class="plugin-name">2. Templater</span>
+      <p style="margin-left: 1rem; margin-top: 0.25rem;">Lets you evaluate Javascript code and file properties dynamically upon note creation. Used to configure standard properties for repos, SaaS ideas, and social script notes automatically. <strong>Configuration:</strong> Set the templates folder path to <code>00 System/Templates</code> and enable the folder creations trigger.</p>
+    </div>
+
+    <div class="plugin-item">
+      <span class="plugin-name">3. Kanban</span>
+      <p style="margin-left: 1rem; margin-top: 0.25rem;">Generates drag-and-drop boards inside Obsidian. Install this to manage your Instagram and YouTube scripting pipelines in the <code>15 Content OS</code> space visually.</p>
+    </div>
+
+    <div class="plugin-item">
+      <span class="plugin-name">4. Advanced Tables</span>
+      <p style="margin-left: 1rem; margin-top: 0.25rem;">Implements auto-formatting and cell navigation for markdown tables. Useful for compiling technical impact matrices inside research and news notes.</p>
+    </div>
+  </div>
+
+  <!-- Section 3: Manual Vault Initialization -->
+  <div class="page-break"></div>
+  <h2>3. Manual Directory Creation</h2>
+  <p>If you prefer not to use an AI agent to set up directories, you can create them instantly in one click by running these terminal commands inside your vault root folder:</p>
+
+  <div class="panel">
+    <h4>Windows PowerShell Script:</h4>
+    <pre><code># Create folders
+New-Item -ItemType Directory -Path "10 Inbox", "00 System/Templates", "00 System/CSS", "00 System/Scripts", "20 Spaces/01 AI Research", "20 Spaces/02 GitHub Repos", "20 Spaces/03 AI Tools", "20 Spaces/04 Prompt Engineering", "20 Spaces/05 Claude Code", "20 Spaces/06 MCP", "20 Spaces/07 AI Skills", "20 Spaces/08 SaaS Ideas", "20 Spaces/09 Instagram Content", "20 Spaces/10 YouTube Content", "20 Spaces/11 Learning", "20 Spaces/12 Projects", "20 Spaces/13 AI News", "20 Spaces/14 OS Search", "20 Spaces/15 Content OS", "20 Spaces/17 Concepts"</code></pre>
+  </div>
+
+  <div class="panel">
+    <h4>macOS / Linux Terminal Shell Script:</h4>
+    <pre><code># Create folders
+mkdir -p "10 Inbox" "00 System/Templates" "00 System/CSS" "00 System/Scripts" "20 Spaces/01 AI Research" "20 Spaces/02 GitHub Repos" "20 Spaces/03 AI Tools" "20 Spaces/04 Prompt Engineering" "20 Spaces/05 Claude Code" "20 Spaces/06 MCP" "20 Spaces/07 AI Skills" "20 Spaces/08 SaaS Ideas" "20 Spaces/09 Instagram Content" "20 Spaces/10 YouTube Content" "20 Spaces/11 Learning" "20 Spaces/12 Projects" "20 Spaces/13 AI News" "20 Spaces/14 OS Search" "20 Spaces/15 Content OS" "20 Spaces/17 Concepts"</code></pre>
+  </div>
+
+  <!-- Section 4: Phase-by-Phase Prompting Manual -->
+  <div class="page-break"></div>
+  <h2>4. Phase-by-Phase AI Prompting Playbook</h2>
+  <p>Copy your empty vault directory path, open any agentic IDE (like <strong>Claude Code</strong>, <strong>Antigravity</strong>, or <strong>Cursor Composer</strong>), and execute the prompts below sequentially to build the system automatically:</p>
+
+  <h3>🚀 Phase 1: Structural Foundations & Core Styles</h3>
+  <div class="panel">
+    <pre><code>You are my senior Obsidian architect. Let's build Phase 1 (Foundation & Styling) of my AI Creator Second Brain.
+Perform the following tasks:
+
+1. Create Directories:
+   - Make the folders: `10 Inbox`, `00 System/Templates`, `00 System/CSS`, and `20 Spaces`.
+   - Inside `20 Spaces`, create: `01 AI Research`, `02 GitHub Repos`, `03 AI Tools`, `04 Prompt Engineering`, `05 Claude Code`, `06 MCP`, `07 AI Skills`, `08 SaaS Ideas`, `09 Instagram Content`, `10 YouTube Content`, `11 Learning`, `12 Projects`, `13 AI News`, `14 OS Search`, `15 Content OS`, and `17 Concepts`.
+
+2. Write the CSS Styling snippet:
+   - Create the file `00 System/CSS/vault-os.css` containing the high-specificity override for Graph view to color-code default nodes (Purple), resolved nodes (Neon Cyan), and unresolved placeholders (Hot Pink: `#ff007f !important`), along with glassmorphism card layouts.
+
+3. Write file templates inside `00 System/Templates/`:
+   - `Template - GitHub Repo.md`: Add metadata properties (type, status, repo_url, language, stars, difficulty, tech_stack, category).
+   - `Template - Concept.md`: Tracks roadmaps, descriptions, and dynamic Dataview trackers.
+   - `Template - Project.md`: Standard project scope, task checkbox outlines, and dependencies.
+   - `Template - Instagram Content.md`: Scripting pipelines, captions, hooks, and metrics trackers (likes, views, saves).
+
+Confirm when Phase 1 folders, templates, and styles are successfully created.</code></pre>
+  </div>
+
+  <h3>🚀 Phase 2: Content OS & Relationship Engine</h3>
+  <div class="panel">
+    <pre><code>Let's build Phase 2 (Content OS & Relationship Engine) of the vault.
+Perform the following tasks:
+
+1. Write the Backlink relationship engine script:
+   - Create the file `00 System/Scripts/relationship_engine.js` (or inline javascript template). This script must query the Dataview API to find all files that link to the current file (backlinks) and all concepts listed in frontmatter (outlinks), rendering a clean index at the footer of files.
+
+2. Create the Home Dashboard:
+   - Create `README.md` at the root of the vault. Use HTML/CSS grids (`os-grid`, `os-card`) to build a dashboard displaying quick access buttons to Spaces, active project pipelines, and content calendars.
+
+3. Set up the Content OS Kanban:
+   - Create `20 Spaces/15 Content OS/Content OS Dashboard.md`. Set up a Dataview table script querying all notes in Spaces 09 and 10, displaying columns for Title, Status, and Views.
+
+Confirm when the relationship script, README dashboard, and Content OS index are built.</code></pre>
+  </div>
+
+  <h3>🚀 Phase 3: Smart-Linking Ingestion Engine</h3>
+  <div class="panel">
+    <pre><code>Let's build Phase 3 (Automated Concept Engine) of the vault.
+Write a Python script at `00 System/Scripts/obsidian_helper.py` that implements a graph-building tool.
+
+Requirements for the python code:
+1. Load all Concept notes located inside `20 Spaces/17 Concepts/`. Treat their filenames as matching keywords.
+2. Scan all files in the vault. For each file, identify matches of concept keywords.
+3. Apply Smart Linking rules:
+   - Ignore matches located inside code fences (blocks starting with ```).
+   - Ignore matches in headers (lines starting with #).
+   - Ignore matches already surrounded by double brackets [[...]].
+   - Only link the FIRST occurrence of a matching concept in the file body. Wrap it in double brackets.
+4. Support CLI command: `python obsidian_helper.py build-graph` to crawl the vault and write changes.
+
+Write this Python file and test that it parses correctly without exceptions.</code></pre>
+  </div>
+
+  <!-- Section 5: The Templates Code -->
+  <div class="page-break"></div>
+  <h2>5. Core Templates Source Code</h2>
+  <p>To copy-paste templates manually, use the following definitions:</p>
+
+  <div class="panel">
+    <h4>Template - Concept.md</h4>
+    <pre><code>---
+type: concept
+category: Core Topic
+status: Active
+tags:
+  - concept
+  - hub
+---
+# Concept: {{title}}
+
+## Definition
+*Provide a concise definition of this concept.*
+
+## Why It Matters
+*Explain the core value or purpose of this concept.*
+
+## Learning Roadmap
+- [ ] Read basic docs.
+- [ ] Build a local project implementation.
+- [ ] Connect with advanced tools.
+
+---
+## 🔌 OS Relationships
+```dataviewjs
+dv.view("00 System/Scripts/relationship_engine")
+```</code></pre>
+  </div>
+
+  <div class="panel">
+    <h4>Template - Project.md</h4>
+    <pre><code>---
+type: project
+status: Planning
+priority: Medium
+due_date: ""
+progress: 0
+tags:
+  - project
+---
+# Project: {{title}}
+
+## Project Scope & Objectives
+*Describe the mission of this project and what constitutes success.*
+
+## Roadmap
+- [ ] **Phase 1: Research & Discovery**
+- [ ] **Phase 2: MVP Development**
+- [ ] **Phase 3: Launch**
+
+## Dependencies
+- Repo Note
+- Tool Note
+
+---
+## 🔌 OS Relationships
+```dataviewjs
+dv.view("00 System/Scripts/relationship_engine")
+```</code></pre>
+  </div>
+
+  <!-- Section 6: Dynamic Relationship Engine JavaScript -->
+  <div class="page-break"></div>
+  <h2>6. Relationship Engine JavaScript</h2>
+  <p>Write this script inside <code>00 System/Scripts/relationship_engine.js</code> to dynamically display related files at the bottom of notes using DataviewJS:</p>
+
+  <div class="panel">
+    <pre><code>const currentFile = dv.current();
+const filePath = currentFile.file.path;
+
+// Find all notes linking here
+const backlinks = dv.pages().where(p => {
+    if (p.file.path === filePath) return false;
+    const file = app.vault.getAbstractFileByPath(p.file.path);
+    if (!file) return false;
+    const cache = app.metadataCache.getFileCache(file);
+    if (!cache || !cache.links) return false;
+    return cache.links.some(l => l.link.includes(currentFile.file.name));
+});
+
+// Render results
+if (backlinks.length > 0) {
+    dv.header(3, "🔗 Backlinks & Connections");
+    dv.list(backlinks.map(b => b.file.link));
+} else {
+    dv.paragraph("*No active connections registered.*");
+}</code></pre>
+  </div>
+
+  <!-- Section 7: Python CLI Helper Implementation -->
+  <div class="page-break"></div>
+  <h2>7. Complete Python CLI Helper Code</h2>
+  <p>Save this complete Python codebase inside <code>00 System/Scripts/obsidian_helper.py</code> to manage graph linking and repository note builds:</p>
+
+  <div class="panel">
+    <pre><code>#!/usr/bin/env python3
+import os
+import sys
+import re
+
+VAULT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+CONCEPTS_DIR = os.path.join(VAULT_ROOT, "20 Spaces", "17 Concepts")
+
+def get_registered_concepts():
+    concepts = {}
+    if not os.path.exists(CONCEPTS_DIR):
+        return concepts
+    for filename in os.listdir(CONCEPTS_DIR):
+        if filename.endswith(".md"):
+            concept_name = filename[:-3]
+            concepts[concept_name.lower()] = concept_name
+    return concepts
+
+def smart_link_file(file_path, concepts_dict):
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    parts = content.split("---", 2)
+    if len(parts) &lt; 3:
+        frontmatter, body = "", content
+    else:
+        frontmatter = parts[0] + "---" + parts[1] + "---\n"
+        body = parts[2]
+        
+    lines = body.split("\n")
+    in_code_block = False
+    linked_concepts = set()
+    new_lines = []
+    
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            new_lines.append(line)
+            continue
+        if in_code_block or stripped.startswith("#"):
+            new_lines.append(line)
+            continue
+            
+        for c_lower, c_real in concepts_dict.items():
+            if c_real in linked_concepts: continue
+            if os.path.basename(file_path)[:-3].lower() == c_lower: continue
+            
+            pattern = re.compile(r'\b(' + re.escape(c_lower) + r')\b', re.IGNORECASE)
+            match = pattern.search(line)
+            if match:
+                start, end = match.span()
+                before, after = line[:start], line[end:]
+                if before.rstrip().endswith("[[") and after.lstrip().startswith("]]"):
+                    linked_concepts.add(c_real)
+                    continue
+                if "[" in before and "]" in after and "(" in after and ")" in after: continue
+                if "http" in before: continue
+                
+                line = line[:start] + f"[[{c_real}]]" + line[end:]
+                linked_concepts.add(c_real)
+        new_lines.append(line)
+        
+    new_content = frontmatter + "\n".join(new_lines)
+    if new_content != content:
+        with open(file_path, "w", encoding="utf-8") as f: f.write(new_content)
+        return True
+    return False
+
+def build_graph():
+    print("[*] Launching Smart Linking Relationship Engine...")
+    concepts = get_registered_concepts()
+    print(f"[*] Found {len(concepts)} registered Concept Hubs...")
+    
+    updated_files = 0
+    for root, dirs, files in os.walk(VAULT_ROOT):
+        # Skip system or hidden directories
+        if ".obsidian" in root or "00 System" in root: continue
+        for file in files:
+            if file.endswith(".md"):
+                file_path = os.path.join(root, file)
+                if smart_link_file(file_path, concepts):
+                    print(f"   [+] Smart linked: {os.path.relpath(file_path, VAULT_ROOT)}")
+                    updated_files += 1
+    print(f"[+] Graph building complete. Updated {updated_files} notes.")
+
+if __name__ == "__main__":
+    if len(sys.argv) &gt; 1 and sys.argv[1] == "build-graph":
+        build_graph()
+    else:
+        print("Usage: python obsidian_helper.py build-graph")</code></pre>
+  </div>
+
+  <!-- Section 8: Vault Customization Guide -->
+  <div class="page-break"></div>
+  <h2>8. Customization Guide: Tailoring to Different Niches</h2>
+  <p>The folders and properties of the Second Brain OS can be modified to suit different niches by editing the directory prompts:</p>
+
+  <div class="panel">
+    <h4>Niche Customization Profiles:</h4>
+    
+    <div class="plugin-item">
+      <span class="plugin-name">💼 For Marketers & Agencies:</span>
+      <ul>
+        <li>Rename folder <code>02 GitHub Repos</code> to <code>02 Client Campaigns</code>.</li>
+        <li>Rename folder <code>08 SaaS Ideas</code> to <code>08 Funnel Structures</code>.</li>
+        <li>Update prompt template tags to track: <code>budget</code>, <code>ROI</code>, <code>conversion_rate</code>, <code>ad_platform</code>.</li>
+      </ul>
+    </div>
+
+    <div class="plugin-item">
+      <span class="plugin-name">✍️ For Writers & Novelists:</span>
+      <ul>
+        <li>Rename folder <code>02 GitHub Repos</code> to <code>02 Story Arcs</code>.</li>
+        <li>Rename folder <code>03 AI Tools</code> to <code>03 Character Outlines</code>.</li>
+        <li>Rename folder <code>08 SaaS Ideas</code> to <code>08 Chapter Layouts</code>.</li>
+        <li>Update templates to track: <code>word_count</code>, <code>POV</code>, <code>timeline</code>, <code>conflict_stage</code>.</li>
+      </ul>
+    </div>
+
+    <div class="plugin-item">
+      <span class="plugin-name">📈 For Finance & Investors:</span>
+      <ul>
+        <li>Rename folder <code>02 GitHub Repos</code> to <code>02 Market Sectors</code>.</li>
+        <li>Rename folder <code>08 SaaS Ideas</code> to <code>08 Startup Pitches</code>.</li>
+        <li>Update templates to track: <code>valuation</code>, <code>ARR</code>, <code>CAGR</code>, <code>funding_stage</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Section 9: Graph view -->
+  <div class="page-break"></div>
+  <h2>9. The Final Constellation: Glowing Galaxy View</h2>
+  <p>Once your note vault is fully populated and styled with the CSS snippets, your Graph View will transform into a beautiful, glowing neon universe. Every space is dynamically color-coded so that connections are immediately clear:</p>
+
+  <div class="screenshot-container">
+    <img src="obsidian_graph.png" alt="Obsidian Neon Graph View" class="screenshot">
+  </div>
+
+</body>
+</html>
